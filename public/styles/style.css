@@ -1,0 +1,30 @@
+/* HEADER 
+===================== */
+
+body{
+	width:100%;
+}
+
+
+.navbar{
+	
+	border-radius:0 !important;
+	
+}
+
+.navbar-brand {
+  padding: 0px;
+}
+.navbar-brand>img {
+  height:55px;
+  padding: 5px;
+  width: 55px;
+}
+
+.content-view{
+	width:100%;
+}
+
+.fleft{
+   float:left;
+}

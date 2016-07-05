@@ -1,0 +1,13 @@
+{
+  "name": "370Project",
+  "version": "1.0.0",
+  "description": "Final Project",
+  "main": "server.js",
+  "dependencies": {
+    "body-parser": "~1.9.3",
+    "express": "~4.10.3",
+    "mysql": "latest",
+    "morgan": "latest",
+    "nodemon": "latest"
+  }
+}
