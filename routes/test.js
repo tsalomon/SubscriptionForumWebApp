@@ -22,7 +22,7 @@ var test_data = {
 
 
 //add main route for ______
-router.route('/test')
+router.route('')
 	.all(function(req, res, next) {
 	  // runs for all HTTP verbs first
 	  // think of it as route specific middleware!
