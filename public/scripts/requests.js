@@ -71,7 +71,7 @@ function getSubSubs(){
 				}else{
 					header = Object.keys(data[0]);
 					console.log(header);
-					$("#numDefSubs").text(data.length);
+					$("#numSubSubs").text(data.length);
 				}
 				
 				//var tableData = [["title", "description", "creator", "create_time"]]
