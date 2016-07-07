@@ -20,13 +20,16 @@ function getDefSubs(){
 					$("#numDefSubs").text(data.length);
 				}
 				
-				var tableData = [header]
+				var tableData = [["title", "description", "creator", "create_time"]]
 				
 				row = [];
 				for(var i=0; i < data.length; i++){
+					
 					row.push(data[i].title);
 					row.push(data[i].description);
 					row.push(data[i].creator);
+					row.push(data[i].create_time);
+					
 					tableData.push(row);
 					row = [];
 				}
@@ -37,6 +40,35 @@ function getDefSubs(){
 			error: function(data) {
 					//alert('woops!'); //or whatever
 					console.log("Could not retrieve default subsaiditts.");
+			}
+	});
+}
+
+function addDefPosts(){
+
+ var header = "";
+
+	//get request to server: /top
+	$.ajax({
+			url: "/top",
+			type: "GET",
+			success: function(rows){
+			
+				//alert("success!!!!!");
+				rows= JSON.parse(rows);
+				console.log(rows);
+				
+				if(rows.length != 0){
+					header = Object.keys(rows[0]);
+					console.log(header);
+					$.each(rows, function(key, row){
+						addPost(row);
+					});
+				
+				}
+			}, 
+			error: function(rows) {
+					console.log("Could not retrieve top posts");
 			}
 	});
 }
@@ -168,25 +200,59 @@ function signup(){
 }
 
 
-function addPost(id, title, rating, text, url, time, creator){
+function addPost(tuple){
 	
-	var post = '<div id="examplePost" class="panel panel-default"><div class="panel-heading"><h2 class="panel-title"><span class="badge pull-right" style="margin-right: 10px">'
-					 + rating 
-					 + '</span>'
-					 + title 
-					 + '</div><div class="panel-body"><div class="well well-sm" style="margin-bottom:0px">'
-					 + text 
-					 + '</div><h5 class="pull-left"> <span class="label label-default">id: '
-					 + id 
-					 + '</span> <span class="label label-default">'
-					 + time
-					 + '</span> <span class="label label-default">'
-					 + creator
-					 +'</span></h5><a class="pull-right" href="'
-					 + url 
-					 + '">'
-					 + url
-					 + '</a></div></div>'
+	try{
+		
+		var id = tuple.id;
+		var ptime = tuple.pub_time;
+		var etime = tuple.edit_time;
+		var title = tuple.title;
+		var text = tuple.text;
+		var url = tuple.url;
+		var upvotes = tuple.upvotes;
+		var downvotes = tuple.downvotes;
+		var creator = tuple.creator;
+		var subs = tuple.subsaiddit;
+		var rating = tuple.rating;
+		
+	}catch(e){
+		alert("invalid post data");
+	}
+	
+	var post = '<div id="examplePost" class="panel panel-default"> \
+	\
+					<div class="panel-heading">\
+						<h2 class="panel-title">\
+						<span class="badge pull-right" style="margin-right: 10px">'
+						+ rating +
+						'</span>\
+						<span class="badge pull-right" style="margin-right: 10px">'
+						+ subs +
+						'</span>'
+						+ title +
+					'</div>\
+	\
+					<div class="panel-body">\
+						<div class="well well-sm" style="margin-bottom:0px">'
+						+ text +
+						'</div>\
+						<h5 class="pull-left"> \
+						<span class="label label-default">id: '
+						+ id +
+						'</span>\
+						<span class="label label-default">'
+						+ etime +
+						'</span>\
+						<span class="label label-default">'
+						+ creator +
+						'</span>\
+						</h5> \
+						<a class="pull-right" href="' + url + '">'
+						+ url +
+						'</a>\
+					</div>\
+				</div>'
 					 
 	console.log("creating post")
 	
