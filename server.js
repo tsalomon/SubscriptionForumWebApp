@@ -42,8 +42,20 @@ app.use(apiRoutes);
 
 // SEND USERS TO FRONTEND ------------
 // has to be registered after API ROUTES
+app.get('/front', function(req, res) {
+	res.sendFile(path.join(__dirname + '/public/pages/front.html'));
+});
+
+app.get('/myfront', function(req, res) {
+	res.sendFile(path.join(__dirname + '/public/pages/myfront.html'));
+});
+
+app.get('/tables', function(req, res) {
+	res.sendFile(path.join(__dirname + '/public/pages/tables.html'));
+});
+
 app.get('', function(req, res) {
-	res.sendFile(path.join(__dirname + '/public/pages/template.html'));
+	res.sendFile(path.join(__dirname + '/public/pages/front.html'));
 });
 
 // MAIN CATCHALL ROUTE --------------- 
