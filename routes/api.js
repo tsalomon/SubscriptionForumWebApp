@@ -8,13 +8,14 @@ var crypto	= require('crypto');			    // import hash functions
 
 var router = express.Router();
 
+// THIS IS A GLOBAL CONNECTION
 // connect to our mysql database
 var con = mysql.createConnection(config.mysql);
 
 con.connect(function(err){
 	
 	if(err){
-		console.log('Error connecting to Db');
+		console.log('Error connecting to DB: ' + config.mysql['database']);
 		return;
 	}
 	console.log('Connection established to DB: ' + config.mysql['database']);
@@ -24,80 +25,78 @@ con.connect(function(err){
 //login route
 router.route('/login')
 
-	.post(function(req, res) {
+	.post(function(req, res, err) {
 	
+		//extract data from POST request
 		loginData = req.body;		
-		var loginError = false;
 		
 		con.query(
 			'SELECT * FROM Accounts WHERE user=?',
 			[loginData.user],
+			
 			function(err,rows){
 				
-				if(rows.length == 0){
-					loginError = true;
-				}else{
+				//catch failed queries
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				//continue if user exists
+				if(rows.length != 0){
 					var user_hash = rows[0].pass;
 					var salt = rows[0].salt;
 					var user_pass = loginData.pass;
 					var sha256_hash = crypto.createHash('sha256').update(user_pass + salt).digest("hex");
 				
+					//hash of entered password != hash in db
 					if(sha256_hash !== user_hash){
-						loginError = true;
+						console.log("[!] Incorrect password for " + loginData.user);
+						res.status(401).end();
 					}
-				}
-				
-				if(loginError){
-					res.json({"error":true})
-					res.status(401).send();
-					res.end();
+					
+					res.status(200).end();
 				}else{
-					res.json({"error":false})
-					res.status(200).send();
-					res.end();
+					res.status(500).end();
 				}
+
 			}
 		);
 		
 	});
 	
-	
 //------ SIGNUP Route -------
 router.route("/signup")
-	.post(function(req,res){
-		
+
+	.post(function(req,res,err){
+
+		//extract data from POST request
 		signupData = req.body;
-		var signupError = false;
-		
-		function randomValueHex (len) {
-			return crypto.randomBytes(Math.ceil(len/2))
-        .toString('hex') // convert to hexadecimal format
-        .slice(0,len);   // return required number of characters
-		}
-		
 		var user = signupData.user;
 		var pass = signupData.pass;
-		var salt = randomValueHex(10);
-		var hash = crypto.createHash('sha256').update(pass + salt).digest("hex");
 		var rep = signupData.rep;
+		
+		//generate random salt (10 hex chars)
+		var salt = randomValueHex(10);
+		
+		//hash the given password with the random salt
+		var hash = crypto.createHash('sha256').update(pass + salt).digest("hex");
 		
 		con.query(
 			'INSERT INTO Accounts(user,pass,rep,salt) VALUES (?,?,?,?)',
 			[user,hash,rep,salt],
+			
+			//query response
 			function(err,resp){
+			
+				//catch failed queries
 				if(err){
-					signupError = true;
-				} 
-				
-				if(signupError){
-					res.json({"error":true})
-					res.status(401).send();
-					res.end();
-				}else{
-					res.json({"error":false})
-					res.status(200).send();
-					res.end();
+					console.log(err);
+					res.status(500).end();
 				}
+				
+				// return success: HTTP 200
+				res.status(200).end();
 			}
 		);
 		
@@ -107,31 +106,30 @@ router.route("/signup")
 router.route("/friends")
 	.post(function(req,res,err){
 		
-		
-		if(err){
-			console.log(err);
-			res.status(500);
-		}
-		
-		
+		//extract data from request body
 		friendData = req.body;
 		var friendError = false;
 		var user1 = friendData.user1;
 		var user2 = friendData.user2;
 		
+		//DEBUG code
 		console.log("Add friends: " + user1 + ", " + user2)
 		
-		
+		//execute Add Friends query using GLOBAL db connection
 		con.query(
 			'INSERT INTO Friends(user1,user2) VALUES (?,?)',
-			[user1,user2],
+			[user1,user2],				//vars replace ?'s in the sql statements
+			
+			//query response
 			function(err,resp){
+				
+				//catch failed queries
 				if(err){
 					console.log(err);
 					res.status(500).end();
 				}
 				
-				//res.send(JSON.stringify(resp));
+				// return success: HTTP 200
 				res.status(200).end();
 			}
 		);
@@ -141,7 +139,13 @@ router.route("/friends")
 	
 		//------ FRONT PAGE Route -------
 router.route("/s")
-	.get(function(req,res){
+	.get(function(req,res, err){
+		
+		//catch error in POST requests
+		if(err){
+			console.log(err);
+			res.status(500) //return a Internal Server Error (500)
+		}
 
 		con.query( 'SELECT title, description, creator FROM Subsaiddits WHERE def=1;',
 			function(err,rows){
@@ -151,14 +155,23 @@ router.route("/s")
 					res.status(500).end();
 				}
 				
-				res.send(JSON.stringify(rows));
-				res.status(200).end();
-				
+				if(rows != 0){
+						res.send(JSON.stringify(rows));
+				}else{
+						res.status(200).end();
+				}
 			}
 		);
 
 	});
 
-
+	//returns a random hex value
+	function randomValueHex (len) {
+		return crypto.randomBytes(Math.ceil(len/2))
+			.toString('hex') // convert to hexadecimal format
+			.slice(0,len);   // return required number of characters
+	}
+		
+	
 //export the router, so it can be imported in the main server.js file
 module.exports = router;
