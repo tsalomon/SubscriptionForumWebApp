@@ -19,6 +19,7 @@
 			$(document).ready(function(){
 				
 				getDefSubs();
+				addPost(0,"FirstPost",999,"This post is made entirely with JS.","http://jquery.com/","00:43 July 7th 2016", "tim");
 			
 			});
 		</script>
@@ -93,7 +94,7 @@
 		
 		
 		<!-- CENTRE AREA -->
-		<div class="col-sm-8">
+		<div id="posts" class="col-sm-8">
 		
 		<!-- EXAMPLE PANEL 4 -->
 		
@@ -109,33 +110,40 @@
 		</div>
 		<!-- END OF EXAMPLE PANEL 4 -->
 		
-		<!-- EXAMPLE PANEL 1 -->
-		<div class="panel panel-default">
-		  <div class="panel-heading">
-			<h2 class="panel-title"><span class="badge pull-left" style="margin-right: 10px">4505</span>
-			This is an Awesome Post!! <a class="pull-right" href="http://reddit.com">http://reddit.com</a>	
 		
+		<!-- EXAMPLE PANEL 1 
+		<div id="examplePost" class="panel panel-default" style="display:none">
+		  <div class="panel-heading">
+				<h2 class="panel-title"><span class="badge pull-right" style="margin-right: 10px">4505</span>
+				This is an Awesome Post!! 	
 			</div>
 			
 		  <div class="panel-body">
 			
-			<div class="well well-sm" style="margin-bottom:0px">
-				Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
-				Donec justo augue, tempor sed vehicula quis, malesuada vel odio. 
-				Praesent vel blandit mauris. Aliquam dictum erat nec ligula ultricies, 
-				eu varius urna ornare. Donec fringilla nulla felis, et aliquam nulla 
-				convallis quis.
-			</div>
-			<h5 class="pull-left"> 
-			<span class="label label-default">id: 0</span>
-			<span class="label label-default">Sun Jun 26 02:33:20 2016 GMT</span>
-			<span class="label label-default">admin</span>
-			</h5>
+				<div class="well well-sm" style="margin-bottom:0px">
+					Lorem ipsum dolor sit amet, consectetur adipiscing elit. 
+					Donec justo augue, tempor sed vehicula quis, malesuada vel odio. 
+					Praesent vel blandit mauris. Aliquam dictum erat nec ligula ultricies, 
+					eu varius urna ornare. Donec fringilla nulla felis, et aliquam nulla 
+					convallis quis.
+				</div>
+				<h5 class="pull-left"> 
+				<span class="label label-default">id: 0</span>
+				<span class="label label-default">Sun Jun 26 02:33:20 2016 GMT</span>
+				<span class="label label-default">admin</span>
+				</h5>
+				<a class="pull-right" href="http://reddit.com">http://reddit.com</a>
 	
+			</div>
 		</div>
+		
+		
+		END OF EXAMPLE PANEL 1 -->
 		</div>
-		</div>
-		<!-- END OF EXAMPLE PANEL 1 -->
+		 
+		
+
+		
 		<!-- END OF CENTRE AREA -->
 		
 		<!-- RIGHT SIDEBAR -->

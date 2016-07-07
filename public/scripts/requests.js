@@ -35,7 +35,8 @@ function getDefSubs(){
 			
 			}, 
 			error: function(data) {
-					alert('woops!'); //or whatever
+					//alert('woops!'); //or whatever
+					console.log("Could not retrieve default subsaiditts.");
 			}
 	});
 }
@@ -165,5 +166,35 @@ function signup(){
 	
 
 }
+
+
+function addPost(id, title, rating, text, url, time, creator){
+	
+	var post = '<div id="examplePost" class="panel panel-default"><div class="panel-heading"><h2 class="panel-title"><span class="badge pull-right" style="margin-right: 10px">'
+					 + rating 
+					 + '</span>'
+					 + title 
+					 + '</div><div class="panel-body"><div class="well well-sm" style="margin-bottom:0px">'
+					 + text 
+					 + '</div><h5 class="pull-left"> <span class="label label-default">id: '
+					 + id 
+					 + '</span> <span class="label label-default">'
+					 + time
+					 + '</span> <span class="label label-default">'
+					 + creator
+					 +'</span></h5><a class="pull-right" href="'
+					 + url 
+					 + '">'
+					 + url
+					 + '</a></div></div>'
+					 
+	console.log("creating post")
+	
+	var postObj = $.parseHTML(post);
+	$("#posts").append(postObj);
+
+}
+
+
 			
 			
