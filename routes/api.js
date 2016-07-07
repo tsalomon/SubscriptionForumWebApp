@@ -65,6 +65,10 @@ router.route('/login')
 		
 	});
 	
+	
+	
+	
+	
 //------ SIGNUP Route -------
 router.route("/signup")
 
@@ -135,19 +139,92 @@ router.route("/friends")
 		);
 		
 	});
-	
-	
-		//------ FRONT PAGE Route -------
+
+		//------ DEFAULT SUBS Route -------
 router.route("/s")
 	.get(function(req,res, err){
 		
-		//catch error in POST requests
+		//catch error in request
 		if(err){
 			console.log(err);
-			res.status(500) //return a Internal Server Error (500)
+			res.status(500); //return a Internal Server Error (500)
 		}
 
-		con.query( 'SELECT title, description, creator FROM Subsaiddits WHERE def=1;',
+		con.query( 'SELECT * FROM Subsaiddits WHERE def = 1;',
+			function(err,rows){
+				
+				console.log(rows);
+				
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				if(rows != null){
+						console.log(rows.length);
+						res.status(200).send(JSON.stringify(rows));
+				}else{
+						
+						res.status(500).end();
+				}
+			}
+		);
+
+	});
+	
+		//------ USERS Route -------
+router.route("/users")
+	.get(function(req,res, err){
+		
+		
+		//catch error in request
+		if(err){
+			console.log(err);
+			res.status(500); //return a Internal Server Error (500)
+		}
+
+		con.query( 'SELECT * FROM Accounts;',
+			function(err,rows){
+				
+				console.log(rows);
+				
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				if(rows != null){
+						res.status(200).send(JSON.stringify(rows));
+				}else{
+						res.status(500).end();
+				}
+			}
+		);
+
+	});
+	
+	
+			//------ DEFAULT FRONT PAGE Route -------
+router.route("/top")
+
+	.get(function(req,res, err){
+		
+		//catch error in request
+		if(err){
+			console.log(err);
+			res.status(500); //return a Internal Server Error (500)
+		}
+
+		con.query( 'SELECT Posts.*, (Posts.upvotes - Posts.downvotes) AS rating\
+					FROM Posts \
+					JOIN\
+					(SELECT title FROM Subsaiddits WHERE def = 1) Defaults\
+					ON Posts.subsaiddit = Defaults.title\
+					ORDER BY rating DESC\
+					LIMIT 10;'
+					,
+					
+					
 			function(err,rows){
 				
 				if(err){
@@ -155,10 +232,12 @@ router.route("/s")
 					res.status(500).end();
 				}
 				
-				if(rows != 0){
-						res.send(JSON.stringify(rows));
+				if(rows != null){
+						console.log(rows);
+						console.log(rows.length);
+						res.status(200).send(JSON.stringify(rows));
 				}else{
-						res.status(200).end();
+						res.status(500).end();
 				}
 			}
 		);
