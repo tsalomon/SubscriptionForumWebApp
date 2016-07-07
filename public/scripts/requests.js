@@ -5,7 +5,7 @@ function getDefSubs(){
 
 	//get request to server: /s
 	$.ajax({
-			url: "/s",
+			url: "/defsubs",
 			type: "GET",
 			success: function(data){
 			
@@ -44,6 +44,61 @@ function getDefSubs(){
 			}
 	});
 }
+
+function getSubSubs(){
+
+ var header = "";
+  var url = "";
+
+	if(getParameterByName('user') != null){
+		url = "/subsubs?user=" + getParameterByName('user');
+		
+	}else{
+		url = "/subsubs";
+	}
+
+	//get request to server: /s
+	$.ajax({
+			url: url,
+			type: "GET",
+			success: function(data){
+			
+				//alert("success!!!!!");
+				data = JSON.parse(data);
+				console.log(data);
+				
+				if(data.length == 0){
+				}else{
+					header = Object.keys(data[0]);
+					console.log(header);
+					$("#numDefSubs").text(data.length);
+				}
+				
+				//var tableData = [["title", "description", "creator", "create_time"]]
+				var tableData = [["title", "description"]];
+				
+				row = [];
+				for(var i=0; i < data.length; i++){
+					
+					row.push(data[i].title);
+					row.push(data[i].description);
+					//row.push(data[i].creator);
+					//row.push(data[i].create_time);
+					
+					tableData.push(row);
+					row = [];
+				}
+				
+				makeTable($("#subSubs"), tableData);
+			
+			}, 
+			error: function(data) {
+					//alert('woops!'); //or whatever
+					console.log("Could not retrieve subscribed subsaiditts.");
+			}
+	});
+}
+
 
 function addMyPosts(){
 

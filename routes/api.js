@@ -141,7 +141,7 @@ router.route("/friends")
 	});
 
 		//------ DEFAULT SUBS Route -------
-router.route("/s")
+router.route("/defsubs")
 	.get(function(req,res, err){
 		
 		//catch error in request
@@ -171,6 +171,9 @@ router.route("/s")
 		);
 
 	});
+	
+	
+	
 	
 		//------ USERS Route -------
 router.route("/users")
@@ -238,6 +241,52 @@ router.route("/my")
 					ON Subbed.subsaiddit = Posts.subsaiddit\
 					ORDER BY rating DESC\
 					LIMIT 10;'
+					,
+					[u],
+					
+			function(err,rows){
+				
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				if(rows != null){
+						console.log(rows);
+						console.log(rows.length);
+						res.status(200).send(JSON.stringify(rows));
+				}else{
+						res.status(500).end();
+				}
+			}
+		);
+
+	});
+	
+	
+				//------ Subscribed Subsaiddits Route -------
+router.route("/subsubs")
+
+	.get(function(req,res, err){
+		
+		//catch error in request
+		if(err){
+			console.log(err);
+			res.status(500); //return a Internal Server Error (500)
+		}
+		
+		var u = req.query.user;
+		
+		if(u == null){
+			u = "tim";
+		}
+		console.log(u)
+
+		con.query( 'SELECT Subsaiddits.*\
+					FROM Accounts, Subscribers, Subsaiddits\
+					WHERE Accounts.user = ?\
+					AND Accounts.user = Subscribers.user \
+					AND Subscribers.subsaiddit = Subsaiddits.title;'
 					,
 					[u],
 					
