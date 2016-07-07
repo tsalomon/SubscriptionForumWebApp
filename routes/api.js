@@ -141,7 +141,7 @@ router.route("/friends")
 	});
 
 		//------ DEFAULT SUBS Route -------
-router.route("/s")
+router.route("/defsubs")
 	.get(function(req,res, err){
 		
 		//catch error in request
@@ -172,6 +172,9 @@ router.route("/s")
 
 	});
 	
+	
+	
+	
 		//------ USERS Route -------
 router.route("/users")
 	.get(function(req,res, err){
@@ -182,8 +185,16 @@ router.route("/users")
 			console.log(err);
 			res.status(500); //return a Internal Server Error (500)
 		}
+		
+		var u = req.query.user;
+		
+		if(u == null){
+			u = '%';
+		}
+		console.log(u)
 
-		con.query( 'SELECT * FROM Accounts;',
+		con.query( 'SELECT * FROM Accounts WHERE user LIKE ?;',
+		[u],
 			function(err,rows){
 				
 				console.log(rows);
@@ -203,8 +214,102 @@ router.route("/users")
 
 	});
 	
+
 	
 			//------ DEFAULT FRONT PAGE Route -------
+router.route("/my")
+
+	.get(function(req,res, err){
+		
+		//catch error in request
+		if(err){
+			console.log(err);
+			res.status(500); //return a Internal Server Error (500)
+		}
+		
+		var u = req.query.user;
+		
+		if(u == null){
+			u = '%';
+		}
+		console.log(u)
+
+		con.query( 'SELECT Posts.*, (Posts.upvotes - Posts.downvotes) AS rating\
+					FROM Posts \
+					JOIN\
+					(SELECT subsaiddit FROM Subscribers WHERE user LIKE ?)Subbed\
+					ON Subbed.subsaiddit = Posts.subsaiddit\
+					ORDER BY rating DESC\
+					LIMIT 10;'
+					,
+					[u],
+					
+			function(err,rows){
+				
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				if(rows != null){
+						console.log(rows);
+						console.log(rows.length);
+						res.status(200).send(JSON.stringify(rows));
+				}else{
+						res.status(500).end();
+				}
+			}
+		);
+
+	});
+	
+	
+				//------ Subscribed Subsaiddits Route -------
+router.route("/subsubs")
+
+	.get(function(req,res, err){
+		
+		//catch error in request
+		if(err){
+			console.log(err);
+			res.status(500); //return a Internal Server Error (500)
+		}
+		
+		var u = req.query.user;
+		
+		if(u == null){
+			u = "tim";
+		}
+		console.log(u)
+
+		con.query( 'SELECT Subsaiddits.*\
+					FROM Accounts, Subscribers, Subsaiddits\
+					WHERE Accounts.user = ?\
+					AND Accounts.user = Subscribers.user \
+					AND Subscribers.subsaiddit = Subsaiddits.title;'
+					,
+					[u],
+					
+			function(err,rows){
+				
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				if(rows != null){
+						console.log(rows);
+						console.log(rows.length);
+						res.status(200).send(JSON.stringify(rows));
+				}else{
+						res.status(500).end();
+				}
+			}
+		);
+
+	});
+	
+				//------ DEFAULT FRONT PAGE Route -------
 router.route("/top")
 
 	.get(function(req,res, err){
@@ -214,6 +319,7 @@ router.route("/top")
 			console.log(err);
 			res.status(500); //return a Internal Server Error (500)
 		}
+		
 
 		con.query( 'SELECT Posts.*, (Posts.upvotes - Posts.downvotes) AS rating\
 					FROM Posts \
@@ -243,6 +349,9 @@ router.route("/top")
 		);
 
 	});
+	
+	
+	
 
 	//returns a random hex value
 	function randomValueHex (len) {

@@ -5,7 +5,7 @@ function getDefSubs(){
 
 	//get request to server: /s
 	$.ajax({
-			url: "/s",
+			url: "/defsubs",
 			type: "GET",
 			success: function(data){
 			
@@ -20,15 +20,16 @@ function getDefSubs(){
 					$("#numDefSubs").text(data.length);
 				}
 				
-				var tableData = [["title", "description", "creator", "create_time"]]
+				//var tableData = [["title", "description", "creator", "create_time"]]
+				var tableData = [["title", "description"]];
 				
 				row = [];
 				for(var i=0; i < data.length; i++){
 					
 					row.push(data[i].title);
 					row.push(data[i].description);
-					row.push(data[i].creator);
-					row.push(data[i].create_time);
+					//row.push(data[i].creator);
+					//row.push(data[i].create_time);
 					
 					tableData.push(row);
 					row = [];
@@ -43,6 +44,109 @@ function getDefSubs(){
 			}
 	});
 }
+
+function getSubSubs(){
+
+ var header = "";
+  var url = "";
+
+	if(getParameterByName('user') != null){
+		url = "/subsubs?user=" + getParameterByName('user');
+		
+	}else{
+		url = "/subsubs";
+	}
+
+	//get request to server: /s
+	$.ajax({
+			url: url,
+			type: "GET",
+			success: function(data){
+			
+				//alert("success!!!!!");
+				data = JSON.parse(data);
+				console.log(data);
+				
+				if(data.length == 0){
+				}else{
+					header = Object.keys(data[0]);
+					console.log(header);
+					$("#numDefSubs").text(data.length);
+				}
+				
+				//var tableData = [["title", "description", "creator", "create_time"]]
+				var tableData = [["title", "description"]];
+				
+				row = [];
+				for(var i=0; i < data.length; i++){
+					
+					row.push(data[i].title);
+					row.push(data[i].description);
+					//row.push(data[i].creator);
+					//row.push(data[i].create_time);
+					
+					tableData.push(row);
+					row = [];
+				}
+				
+				makeTable($("#subSubs"), tableData);
+			
+			}, 
+			error: function(data) {
+					//alert('woops!'); //or whatever
+					console.log("Could not retrieve subscribed subsaiditts.");
+			}
+	});
+}
+
+
+function addMyPosts(){
+
+ var header = "";
+ var url = "";
+
+	if(getParameterByName('user') != null){
+		url = "/my?user=" + getParameterByName('user');
+		
+	}else{
+		url = "/my?user=" + "tim"; //
+	}
+
+	//get request to server: /top
+	$.ajax({
+			url: url,
+			type: "GET",
+			success: function(rows){
+			
+				//alert("success!!!!!");
+				rows= JSON.parse(rows);
+				console.log(rows);
+				
+				if(rows.length != 0){
+					header = Object.keys(rows[0]);
+					console.log(header);
+					$.each(rows, function(key, row){
+						addPost(row);
+					});
+				
+				}
+			}, 
+			error: function(rows) {
+					console.log("Could not retrieve your top posts");
+			}
+	});
+}
+
+function getParameterByName(name, url) {
+    if (!url) url = window.location.href;
+    name = name.replace(/[\[\]]/g, "\\$&");
+    var regex = new RegExp("[?&]" + name + "(=([^&#]*)|&|#|$)"),
+        results = regex.exec(url);
+    if (!results) return null;
+    if (!results[2]) return '';
+    return decodeURIComponent(results[2].replace(/\+/g, " "));
+}
+
 
 function addDefPosts(){
 
@@ -237,7 +341,7 @@ function addPost(tuple){
 						<div class="well well-sm" style="margin-bottom:0px">'
 						+ text +
 						'</div>\
-						<h5 class="pull-left"> \
+						<h5 class="pull-right"> \
 						<span class="label label-default">id: '
 						+ id +
 						'</span>\
@@ -247,10 +351,12 @@ function addPost(tuple){
 						<span class="label label-default">'
 						+ creator +
 						'</span>\
-						</h5> \
-						<a class="pull-right" href="' + url + '">'
+						</h5>\
+						<h5 class="pull-left"> \
+						<a for="basic-url" href="http://' + url +'"> http://'
 						+ url +
 						'</a>\
+						</h5>\
 					</div>\
 				</div>'
 					 
