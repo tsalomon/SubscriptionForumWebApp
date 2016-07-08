@@ -28,3 +28,9 @@ body{
 .fleft{
    float:left;
 }
+
+.form-control-inline {
+    min-width: 0;
+    width: auto;
+    display: inline;
+}
