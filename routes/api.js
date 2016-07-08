@@ -309,6 +309,39 @@ router.route("/subsubs")
 
 	});
 	
+					//------ Query Route -------
+router.route("/query")
+
+	.post(function(req,res, err){
+		
+		var q = req.body.query;
+		console.log("query string: " + JSON.stringify(q))
+		
+		if(q == null || q == "" || q ==undefined){
+			q = "SELECT * FROM Accounts";
+		}
+
+		con.query( q,
+					
+			function(err,rows){
+				
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				if(rows != null){
+						console.log(rows);
+						console.log(rows.length);
+						res.status(200).send(JSON.stringify(rows));
+				}else{
+						res.status(500).end();
+				}
+			}
+		);
+
+	});
+	
 				//------ DEFAULT FRONT PAGE Route -------
 router.route("/top")
 

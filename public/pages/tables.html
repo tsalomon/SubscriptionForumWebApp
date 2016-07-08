@@ -91,46 +91,16 @@
 	  <div class="row">
 	  
 		<!-- LEFT SIDEBAR -->
-		<div class="col-sm-2">
-		 
-		</div>
-		<!-- END OF LEFT SIDEBAR -->
+		<div class="col-sm-6">
 		
-		
-		<!-- CENTRE AREA -->
-		<div class="col-sm-8">
-		
-		<!-- ADD FRIEND -->
-		<div class="panel panel-default">
-		<div class="panel-heading">
-			<h3 class="panel-title">Add Friend</h3>
-		</div>
-		<div class="panel-body">
-		
-		<form id="addFriend" class="navbar-form navbar-left">
-	
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="user1">
-				<span class="input-group-addon" id="basic-addon1"> </span>
-				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="user2">
-				<span class="input-group-btn">
-					<button type="button" onclick="addFriend()" class="btn btn-default">Submit</button>					
-				</span>
-
-			</div>
-		  
-		</form>
-		</div>
-		</div>
-	
 		<!-- EXAMPLE PANEL 3 -->
 		<div class="panel panel-default">
 		<div class="panel-heading">
 			<h3 class="panel-title">Sign Up</h3>
 		</div>
-		<div class="panel-body">
+		<div class="panel-body row">
 		
-		<form id="signup_frm" class="navbar-form navbar-left">
+		<form id="signup_frm" class="col-sm-12">
 	
 			<div class="input-group">
 				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="user">
@@ -150,26 +120,162 @@
 		</div>
 		<!-- END OF EXAMPLE PANEL 3 -->
 		
-			
-			
-			
-		<!-- EXAMPLE PANEL 4 -->
-		
-		<div class="panel panel-default" id="example_tab">
-			<div class="panel-heading">
-				<h3 class="panel-title">Example BootStrap Table</h3>
-			</div>
-			
-			<div class="panel-body">
-				<p>The data in this table is loaded at runtime using JS.</p>
-			</div>
-			
-			<!-- Table -->
-			<table class="table">
-			
-			</table>
+		<!-- EXAMPLE PANEL 3 -->
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Create Subsaiddit</h3>
 		</div>
-		<!-- END OF EXAMPLE PANEL 4 -->
+		<div class="panel-body row">
+		
+		<form id="subscribe_frm" class="col-sm-12">
+	
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1" name="title">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="text" class="form-control" placeholder="Description" aria-describedby="basic-addon1" name ="desc">
+				<span class="input-group-addon" id="basic-addon2"> </span>
+				<input type="text" class="form-control" placeholder="Creator" aria-describedby="basic-addon2" name ="creator">
+				<span class="input-group-addon" id="basic-addon3">Def?<input type="checkbox" aria-describedby="basic-addon3" name="def"></span>
+				<span class="input-group-btn">
+					<button type="button" onclick="" class="btn btn-default">Submit</button>					
+				</span>
+
+			</div>
+		  
+		</form>
+	
+		</div>
+		</div>
+		
+						<!-- EXAMPLE PANEL 3 -->
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Submit Post</h3>
+		</div>
+		<div class="panel-body">
+		<div class="row">
+		<form id="post_frm" class="col-sm-12">
+			
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1" name="title">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="text" class="form-control" placeholder="URL" aria-describedby="basic-addon2" name ="url">
+			</div>
+			<div class="input-group " style="width:100%">
+				<textarea class="form-control form-control-inline " placeholder="Text" name="text" ></textarea>
+			</div>
+			<div class="input-group" style="">
+				<input type="text" class="form-control" placeholder="Creator" aria-describedby="basic-addon2" name ="creator">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="text" class="form-control" placeholder="Subsaiddit" aria-describedby="basic-addon1" name="subs">
+			</div>
+			<div class="input-group">
+				<input type="number" class="form-control" placeholder="Up" aria-describedby="basic-addon1" name="upvotes">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="number" class="form-control" placeholder="Down" aria-describedby="basic-addon1" name="downvotes">				<span class="input-group-btn">
+			
+				<button type="button" onclick="" class="btn btn-default pull-right">Submit</button>
+			</div>
+		</form>
+		</div>
+		</div>
+		</div>
+		<!-- END OF EXAMPLE PANEL 3 -->
+		
+	
+		</div>
+		<!-- END OF LEFT SIDEBAR -->
+		
+		
+		<!-- RIGHT AREA -->
+		<div class="col-sm-6">
+		
+			 <!-- ADD FRIEND -->
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Add Friend</h3>
+		</div>
+		<div class="panel-body row">
+		
+		<form id="addFriend" class="col-sm-12">
+	
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="user1">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="user2">
+				<span class="input-group-btn">
+					<button type="button" onclick="addFriend()" class="btn btn-default">Submit</button>					
+				</span>
+
+			</div>
+		  
+		</form>
+		</div>
+		</div>
+	
+		
+		
+		<!-- EXAMPLE PANEL 3 -->
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Subscribe to Subsaiddit</h3>
+		</div>
+		<div class="panel-body row">
+		
+		<form id="subscribe_frm" class="col-sm-12">
+	
+			<div class="input-group">
+				<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" name="user">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="text" class="form-control" placeholder="Subsaiddit" aria-describedby="basic-addon1" name ="subs">
+				<span class="input-group-btn">
+					<button type="button" onclick="" class="btn btn-default">Submit</button>					
+				</span>
+
+			</div>
+		  
+		</form>
+	
+		</div>
+		</div>
+		<!-- END OF EXAMPLE PANEL 3 -->		
+			
+			
+		
+								<!-- EXAMPLE PANEL 3 -->
+		<div class="panel panel-default">
+		<div class="panel-heading">
+			<h3 class="panel-title">Submit Comment</h3>
+		</div>
+		<div class="panel-body">
+		<div class="row">
+		<form id="comment_frm" class="col-sm-12">
+			
+			<div class="input-group " style="width:100%">
+				<textarea class="form-control form-control-inline " placeholder="Text" name="text" ></textarea>
+			</div>
+			<div class="input-group" style="">
+				<input type="text" class="form-control" placeholder="Creator" aria-describedby="basic-addon2" name ="creator">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="number" class="form-control" placeholder="Up" aria-describedby="basic-addon1" name="upvotes">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="number" class="form-control" placeholder="Down" aria-describedby="basic-addon1" name="downvotes">
+			</div>
+			<div class="input-group">
+				<input type="number" class="form-control" placeholder="Comment id" aria-describedby="basic-addon1" name="comment_id">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="number" class="form-control" placeholder="Post id" aria-describedby="basic-addon1" name="post_id">
+				<span class="input-group-btn">
+				<button type="button" onclick="" class="btn btn-default pull-right">Submit</button>
+			</div>
+		</form>
+		</div>
+		</div>
+		</div>
+		<!-- END OF EXAMPLE PANEL 3 -->
+	
+			
+		
 		
 		
 		<script>
@@ -181,27 +287,61 @@
 							["Paris", "Milan", "Rome"], 
 							["Pittsburg", "Wichita", "Boise"]];
 							
-				var exTable = makeTable($("#example_tab"), data);
+				//var exTable = makeTable($("#example_tab"), data);
 			
 			});
 			
 		</script>
 		
+		
+		</div>
 		</div>
 		
+		<!-- END OF R AREA -->
 		
-		<!-- END OF CENTRE AREA -->
+		<div class="row" id="query_div">
 		
-		<!-- RIGHT SIDEBAR -->
-		<div class="col-sm-2">
-		  <form class="" role="search">
-			<div class="form-group">
-			  <input type="text" class="form-control" placeholder="Search">
+			<div class="col-sm-12">
+
+				<!-- EXAMPLE PANEL 4 -->
+				
+				<div class="panel panel-default" id="query_frm">
+					<div class="panel-heading">
+						<h3 class="panel-title">Query Table</h3>
+					</div>
+					
+					<div class="panel-body">
+						<p>The table displays the query result.</p>
+						<div class="row">
+						  <div class="col-lg-6">
+							<div class="input-group">
+							  <input type="text" id="query" class="form-control" placeholder="Enter query here...">
+							  <span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="query()"><span class="glyphicon glyphicon-search"></span></button>
+							  </span>
+							</div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						 </div>
+						
+					</div>
+					
+					<!-- Table -->
+					<table class="table" id="query_results">
+					
+					</table>
+					<div id="bottom"></div>
+				</div>
+				<!-- END OF EXAMPLE PANEL 4 -->
+			
+		
+		
 			</div>
-			<button type="submit" class="btn btn-default">Submit</button>
-		  </form>
 		</div>
-		<!-- END OF RIGHT SIDEBAR -->
+		
+		
+		  
+		
+	
 	</div>
 	</div>
 	
