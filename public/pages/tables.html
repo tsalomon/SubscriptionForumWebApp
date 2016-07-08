@@ -249,26 +249,23 @@
 		</div>
 		<div class="panel-body">
 		<div class="row">
-		<form id="post_frm" class="col-sm-12">
+		<form id="comment_frm" class="col-sm-12">
 			
-			<div class="input-group">
-				<input type="text" class="form-control" placeholder="Title" aria-describedby="basic-addon1" name="title">
-				<span class="input-group-addon" id="basic-addon1"> </span>
-				<input type="text" class="form-control" placeholder="URL" aria-describedby="basic-addon2" name ="url">
-			</div>
 			<div class="input-group " style="width:100%">
 				<textarea class="form-control form-control-inline " placeholder="Text" name="text" ></textarea>
 			</div>
 			<div class="input-group" style="">
 				<input type="text" class="form-control" placeholder="Creator" aria-describedby="basic-addon2" name ="creator">
 				<span class="input-group-addon" id="basic-addon1"> </span>
-				<input type="text" class="form-control" placeholder="Subsaiddit" aria-describedby="basic-addon1" name="subs">
-			</div>
-			<div class="input-group">
 				<input type="number" class="form-control" placeholder="Up" aria-describedby="basic-addon1" name="upvotes">
 				<span class="input-group-addon" id="basic-addon1"> </span>
-				<input type="number" class="form-control" placeholder="Down" aria-describedby="basic-addon1" name="downvotes">				<span class="input-group-btn">
-			
+				<input type="number" class="form-control" placeholder="Down" aria-describedby="basic-addon1" name="downvotes">
+			</div>
+			<div class="input-group">
+				<input type="number" class="form-control" placeholder="Comment id" aria-describedby="basic-addon1" name="comment_id">
+				<span class="input-group-addon" id="basic-addon1"> </span>
+				<input type="number" class="form-control" placeholder="Post id" aria-describedby="basic-addon1" name="post_id">
+				<span class="input-group-btn">
 				<button type="button" onclick="" class="btn btn-default pull-right">Submit</button>
 			</div>
 		</form>
@@ -278,23 +275,7 @@
 		<!-- END OF EXAMPLE PANEL 3 -->
 	
 			
-		<!-- EXAMPLE PANEL 4 -->
 		
-		<div class="panel panel-default" id="example_tab">
-			<div class="panel-heading">
-				<h3 class="panel-title">Example BootStrap Table</h3>
-			</div>
-			
-			<div class="panel-body">
-				<p>The data in this table is loaded at runtime using JS.</p>
-			</div>
-			
-			<!-- Table -->
-			<table class="table">
-			
-			</table>
-		</div>
-		<!-- END OF EXAMPLE PANEL 4 -->
 		
 		
 		<script>
@@ -306,7 +287,7 @@
 							["Paris", "Milan", "Rome"], 
 							["Pittsburg", "Wichita", "Boise"]];
 							
-				var exTable = makeTable($("#example_tab"), data);
+				//var exTable = makeTable($("#example_tab"), data);
 			
 			});
 			
@@ -317,6 +298,45 @@
 		</div>
 		
 		<!-- END OF R AREA -->
+		
+		<div class="row" id="query_div">
+		
+			<div class="col-sm-12">
+
+				<!-- EXAMPLE PANEL 4 -->
+				
+				<div class="panel panel-default" id="query_frm">
+					<div class="panel-heading">
+						<h3 class="panel-title">Query Table</h3>
+					</div>
+					
+					<div class="panel-body">
+						<p>The table displays the query result.</p>
+						<div class="row">
+						  <div class="col-lg-6">
+							<div class="input-group">
+							  <input type="text" id="query" class="form-control" placeholder="Enter query here...">
+							  <span class="input-group-btn">
+								<button class="btn btn-default" type="button" onclick="query()"><span class="glyphicon glyphicon-search"></span></button>
+							  </span>
+							</div><!-- /input-group -->
+						  </div><!-- /.col-lg-6 -->
+						 </div>
+						
+					</div>
+					
+					<!-- Table -->
+					<table class="table" id="query_results">
+					
+					</table>
+					<div id="bottom"></div>
+				</div>
+				<!-- END OF EXAMPLE PANEL 4 -->
+			
+		
+		
+			</div>
+		</div>
 		
 		
 		  

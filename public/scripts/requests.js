@@ -176,6 +176,53 @@ function addDefPosts(){
 			}
 	});
 }
+
+function scrollBottom(){
+
+ $("html, body").animate({ scrollTop: $(document).height() }, "slow");
+
+
+}
+
+function query(){
+
+ var header = "";
+ var query = $("#query").val();
+ console.log("query: " + query)
+ var tableData = [];
+ $("#query_results").empty();
+ 
+ 
+
+	//get request to server: /query
+	$.ajax({
+			url: "/query",
+			type: "POST",
+			data: {"query":query},
+			success: function(rows){
+			
+				//alert("success!!!!!");
+				rows= JSON.parse(rows);
+				console.log(rows);
+				
+				if(rows.length != 0){
+					header = Object.keys(rows[0]);
+					console.log(header);
+					tableData.push(header);
+					$.each(rows, function(key, row){
+						tableData.push(row);
+					});
+					makeTable($("#query_results"), tableData);
+					scrollBottom();
+					
+				}
+			}, 
+			error: function(rows, xhr, status, error) {
+					alert("Could not execute query: " + xhr)
+
+			}
+	});
+}
 			
 function makeTable(container, data) {
 	var table = $("table").addClass('CSSTableGenerator');
