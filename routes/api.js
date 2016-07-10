@@ -55,7 +55,12 @@ router.route('/login')
 						res.status(401).end();
 					}
 					
-					res.status(200).end();
+					//if correct password, send url to redirect to 
+					res.contentType('application/json');
+					var data = JSON.stringify('/myfront?user=' + loginData.user)
+					res.header('Content-Length', data.length);
+					res.status(200).end(data);
+				
 				}else{
 					res.status(500).end();
 				}
@@ -93,6 +98,39 @@ router.route("/signup")
 			//query response
 			function(err,resp){
 			
+				//catch failed queries
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				// return success: HTTP 200
+				res.status(200).end();
+			}
+		);
+		
+	});
+	
+	
+	//------ ADD FRIEND Route -------
+router.route("/addSub")
+	.post(function(req,res,err){
+		
+		//extract data from request body
+		subData = req.body;
+		
+		//DEBUG code
+		console.log("Adding subsaiddit: " + subData.title + "Def: " + subData.def)
+		
+		//execute query using GLOBAL db connection
+		con.query(
+			'INSERT INTO  Subsaiddits(title, def, description, creator) \
+ 			VALUES (?,?,?,?);',
+			[subData.title,subData.def, subData.desc, subData.creator],				//vars replace ?'s in the sql statements
+			
+			//query response
+			function(err,resp){
+				
 				//catch failed queries
 				if(err){
 					console.log(err);
