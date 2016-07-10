@@ -283,6 +283,9 @@ function addSub(){
 	var title = form.find("input[name='title']");
 	var desc = form.find("input[name='desc']");
 	var creator = form.find("input[name='creator']");
+	
+	
+	
 	var def = 0;
 	if(form.find("input[name='def']").is(":checked")){
 		def = 1;
@@ -294,6 +297,9 @@ function addSub(){
 		creator:creator.val(),
 		def: def
 	};
+	
+	console.log(subData);
+	
 
 	//log that (best for debugging)
 	console.log(subData);

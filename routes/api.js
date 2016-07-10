@@ -3,7 +3,8 @@
 var express = require('express');
 var mysql		= require('mysql');			    // import JS MYSQL driver
 var config 	= require('../config');		    // import config file
-var crypto	= require('crypto');			    // import hash functions
+var crypto	= require('crypto');
+var querystring = require("querystring");			    // import hash functions
 
 
 var router = express.Router();
@@ -112,7 +113,7 @@ router.route("/signup")
 	});
 	
 	
-	//------ ADD FRIEND Route -------
+	//------ ADD SUB Route -------
 router.route("/addSub")
 	.post(function(req,res,err){
 		
@@ -126,7 +127,7 @@ router.route("/addSub")
 		con.query(
 			'INSERT INTO  Subsaiddits(title, def, description, creator) \
  			VALUES (?,?,?,?);',
-			[subData.title,subData.def, subData.desc, subData.creator],				//vars replace ?'s in the sql statements
+			[subData.title,parseInt(subData.def), subData.desc, subData.creator],				//vars replace ?'s in the sql statements
 			
 			//query response
 			function(err,resp){
@@ -347,7 +348,7 @@ router.route("/subsubs")
 
 	});
 	
-					//------ Query Route -------
+					//------ Queasdfgry Route -------
 router.route("/query")
 
 	.post(function(req,res, err){
