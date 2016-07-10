@@ -262,6 +262,7 @@ function login(){
 		data: loginData,
 		success: function (data) {
 			alert("Successful Login")
+			window.location = data;
 		},
 		error: function (xhr, status, error) {
 			console.log(error);
@@ -274,6 +275,52 @@ function login(){
 	pass_input.val("");
 
 }
+
+function addSub(){
+	
+	//get data from form
+	var form = $('#sub_frm');
+	var title = form.find("input[name='title']");
+	var desc = form.find("input[name='desc']");
+	var creator = form.find("input[name='creator']");
+	var def = 0;
+	if(form.find("input[name='def']").is(":checked")){
+		def = 1;
+	}
+	
+	var subData = {
+		title:title.val(),
+		desc:desc.val(),
+		creator:creator.val(),
+		def: def
+	};
+
+	//log that (best for debugging)
+	console.log(subData);
+	console.log(JSON.stringify(subData));
+
+	//send data as POST to server
+	$.ajax({
+		url: "/addSub",
+		type: "POST",
+		data: subData,
+		success: function (data) {
+			alert("Subsaiddit Added")
+		},
+		error: function (xhr, status, error) {
+			console.log(error);
+			alert("Error. Subsaiddit not created.")
+		}
+
+	});
+
+	//clear form fields
+	title.val("");
+	desc.val("");
+	creator.val("");
+}
+
+
 
 function addFriend(){
 	
