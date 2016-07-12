@@ -113,6 +113,93 @@ router.route("/signup")
 	});
 	
 	
+	
+		//------ Subscribe Route -------
+router.route("/subscribe")
+	.post(function(req,res,err){
+		
+		//extract data from request body
+		subData = req.body;
+		
+		//DEBUG code
+		//console.log("subscribe: " + subData.subsaiddit + "Def: " + subData.def)
+		console.log("subscribed");
+		
+		//execute query using GLOBAL db connection
+		con.query(
+			'INSERT INTO Subscribers(user, subsaiddit) \
+ 			VALUES (?,?);',
+			[subData.user,subData.subs],				//vars replace ?'s in the sql statements
+			
+			//query response
+			function(err,resp){
+				
+				//catch failed queries
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				// return success: HTTP 200
+				res.status(200).end();
+			}
+		);
+		
+	});
+	
+	
+			//------ POST Route -------
+router.route("/addPost")
+	.post(function(req,res,err){
+		
+		//extract data from request body
+		subData = req.body;
+		console.log(JSON.stringify(subData));
+		
+		//
+		for(var attr in subData){
+			//console.log(str.normalize())
+			subData[attr] = subData[attr].normalize()
+			console.log(subData[attr])
+			
+		}
+		
+		//DEBUG code
+		//console.log("subscribe: " + subData.subsaiddit + "Def: " + subData.def)
+		console.log("addpost" + JSON.stringify(subData));
+		
+		//execute query using GLOBAL db connection
+		con.query(
+			'INSERT INTO Posts(title, text, url, upvotes, downvotes, creator, subsaiddit)\
+			VALUES (?,?,?,?,?,?,?);',
+			[
+			subData.title,
+			subData.text,
+			subData.url,
+			parseInt(subData.upvotes),
+			parseInt(subData.downvotes),
+			subData.creator,
+			subData.subs
+			],				//vars replace ?'s in the sql statements
+			
+			//query response
+			function(error, rows){
+				
+				//catch failed queries
+				if(error){
+					console.log(error);
+					return res.status(500).send(error.message)
+				}
+				
+				// return success: HTTP 200
+				res.status(200).end();
+			}
+		);
+		
+	});
+	
+	
+	
 	//------ ADD SUB Route -------
 router.route("/addSub")
 	.post(function(req,res,err){
@@ -162,6 +249,25 @@ router.route("/friends")
 		con.query(
 			'INSERT INTO Friends(user1,user2) VALUES (?,?)',
 			[user1,user2],				//vars replace ?'s in the sql statements
+			
+			//query response
+			function(err,resp){
+				
+				//catch failed queries
+				if(err){
+					console.log(err);
+					res.status(500).end();
+				}
+				
+				// return success: HTTP 200
+				res.status(200).end();
+			}
+		);
+		
+		//execute Add Friends query using GLOBAL db connection
+		con.query(
+			'INSERT INTO Friends(user1,user2) VALUES (?,?)',
+			[user2,user1],				//vars replace ?'s in the sql statements
 			
 			//query response
 			function(err,resp){
@@ -353,8 +459,9 @@ router.route("/query")
 
 	.post(function(req,res, err){
 		
-		var q = req.body.query;
+		var q = req.body.query.normalize();
 		console.log("query string: " + JSON.stringify(q))
+		
 		
 		if(q == null || q == "" || q ==undefined){
 			q = "SELECT * FROM Accounts";
@@ -362,19 +469,17 @@ router.route("/query")
 
 		con.query( q,
 					
-			function(err,rows){
+			function(error,rows){
 				
-				if(err){
-					console.log(err);
-					res.status(500).end();
-				}
+				if(error){
+					console.log("error in query" + error);
+					return res.status(500).send(error.message)
+				};
 				
 				if(rows != null){
 						console.log(rows);
 						console.log(rows.length);
 						res.status(200).send(JSON.stringify(rows));
-				}else{
-						res.status(500).end();
 				}
 			}
 		);

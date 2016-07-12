@@ -217,9 +217,10 @@ function query(){
 					
 				}
 			}, 
-			error: function(rows, xhr, status, error) {
-					alert("Could not execute query: " + xhr)
-
+			error: function(data) {
+				var e = data.responseText;
+				alert(data.status + " "+data.statusText +"\n\n" + e)
+			
 			}
 	});
 }
@@ -291,25 +292,25 @@ function addSub(){
 		def = 1;
 	}
 	
-	var subData = {
+	var data = {
 		title:title.val(),
 		desc:desc.val(),
 		creator:creator.val(),
 		def: def
 	};
 	
-	console.log(subData);
+	console.log(data);
 	
 
 	//log that (best for debugging)
-	console.log(subData);
-	console.log(JSON.stringify(subData));
+	console.log(data);
+	console.log(JSON.stringify(data));
 
 	//send data as POST to server
 	$.ajax({
 		url: "/addSub",
 		type: "POST",
-		data: subData,
+		data: data,
 		success: function (data) {
 			alert("Subsaiddit Added")
 		},
@@ -326,6 +327,53 @@ function addSub(){
 	creator.val("");
 }
 
+
+function submitPost(){
+	
+	//get data from form
+	var form = $('#post_frm');
+	
+	var data = {}
+	data.title = form.find("input[name='title']").val();
+	data.url = form.find("input[name='url']").val();
+	data.creator = form.find("input[name='creator']").val();
+	data.text = form.find("textarea[name='text']").val();
+	data.subs = form.find("input[name='subs']").val();
+	data.upvotes = form.find("input[name='upvotes']").val();
+	data.downvotes = form.find("input[name='downvotes']").val();
+
+	console.log('submitPost()')
+	
+	//normalize string encoding
+	for(attr in data){
+		data[attr] = data[attr].normalize()
+		console.log(data[attr])
+	}
+		
+	//log that (best for debugging)
+	//alert(JSON.stringify(data));
+	console.log(JSON.stringify(data));
+
+	//send data as POST to server
+	$.ajax({
+		url: "/addPost",
+		type: "POST",
+		data: data,
+		success: function (data) {
+			alert("Post Added")
+		},
+		error: function (data) {
+			
+			var e = data.responseText;
+				alert(data.status + " "+data.statusText +"\n\n" + e)
+		}
+
+
+	});
+
+	//clear form fields
+	
+}
 
 
 function addFriend(){
