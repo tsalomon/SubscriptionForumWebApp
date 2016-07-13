@@ -29,7 +29,7 @@ router.route('/login')
 	.post(function(req, res, err) {
 	
 		//extract data from POST request
-		loginData = req.body;		
+		var loginData = req.body;		
 		
 		con.query(
 			'SELECT * FROM Accounts WHERE user=?',
@@ -81,7 +81,7 @@ router.route("/signup")
 	.post(function(req,res,err){
 
 		//extract data from POST request
-		signupData = req.body;
+		var signupData = req.body;
 		var user = signupData.user;
 		var pass = signupData.pass;
 		var rep = signupData.rep;
@@ -115,45 +115,43 @@ router.route("/signup")
 	
 	
 		//------ Subscribe Route -------
+	
 router.route("/subscribe")
+
 	.post(function(req,res,err){
+		console.log("in subscribe route")
 		
-		//extract data from request body
-		subData = req.body;
+		var data = req.body;
 		
-		//DEBUG code
-		//console.log("subscribe: " + subData.subsaiddit + "Def: " + subData.def)
-		console.log("subscribed");
-		
-		//execute query using GLOBAL db connection
-		con.query(
-			'INSERT INTO Subscribers(user, subsaiddit) \
- 			VALUES (?,?);',
-			[subData.user,subData.subs],				//vars replace ?'s in the sql statements
-			
-			//query response
-			function(err,resp){
+		con.query( "INSERT INTO Subscribers(user, subsaiddit) VALUES (?,?);",
+			[data.user,data.subs],
+					
+			function(qError,rows){
 				
-				//catch failed queries
-				if(err){
-					console.log(err);
-					res.status(500).end();
+				if(qError){
+					console.log("subscribe: " + qError);
+					return res.status(500).send(qError.message)
+				};
+				
+				if(rows != null){
+					console.log("in subscribe query")
+					console.log(rows);
+					console.log(rows.length);
+					res.status(200).send(rows);
 				}
 				
-				// return success: HTTP 200
-				res.status(200).end();
 			}
 		);
-		
+
 	});
 	
 	
 			//------ POST Route -------
-router.route("/addPost")
+router.route("/post")
 	.post(function(req,res,err){
 		
 		//extract data from request body
-		subData = req.body;
+		var subData = req.body;
 		console.log(JSON.stringify(subData));
 		
 		//
@@ -193,6 +191,49 @@ router.route("/addPost")
 				
 				// return success: HTTP 200
 				res.status(200).end();
+			}
+		);
+		
+	})
+	.delete(function(req,res,err){
+		
+		//catch error in request
+		if(err){
+			console.log(err);
+			res.status(500); //return a Internal Server Error (500)
+		}
+		
+		//extract data from request body
+		var data = req.body;
+		console.log(JSON.stringify(data));
+		
+		//
+		for(var attr in data){
+			//console.log(str.normalize())
+			data[attr] = data[attr].normalize()
+			console.log(data[attr])
+		}
+		
+		//DEBUG code
+		//console.log("subscribe: " + data.subsaiddit + "Def: " + data.def)
+		console.log("delete post: " + data.id);
+		
+		//execute query using GLOBAL db connection
+		con.query(
+			'DELETE FROM Posts WHERE Posts.id = ?',
+			[data.id],				
+			
+			//query response
+			function(qError, rows){
+				
+				//catch failed queries
+				if(qError){
+					console.log(qError);
+					return res.status(500).send(qError.message)
+				}
+				
+				// return success: HTTP 200
+				res.status(200).send(rows);
 			}
 		);
 		
@@ -459,6 +500,7 @@ router.route("/query")
 
 	.post(function(req,res, err){
 		
+		
 		var q = req.body.query.normalize();
 		console.log("query string: " + JSON.stringify(q))
 		
@@ -485,6 +527,8 @@ router.route("/query")
 		);
 
 	});
+	
+
 	
 				//------ DEFAULT FRONT PAGE Route -------
 router.route("/top")

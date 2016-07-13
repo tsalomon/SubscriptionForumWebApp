@@ -104,13 +104,19 @@ function addMyPosts(){
 
  var header = "";
  var url = "";
+ var user = getParameterByName('user')
 
-	if(getParameterByName('user') != null){
-		url = "/my?user=" + getParameterByName('user');
+	if( user != null){
+		url = "/my?user=" + user;
 		
 	}else{
-		url = "/my?user=" + "tim"; //
+		user = "tim";
+		url = "/my?user=" + user; //
 	}
+	
+	$("#user_header").html("&nbsp;" + user + "'s Front Page" + " <small>Top Posts in Subscribed Subsaiditts</small>")
+	
+	
 
 	//get request to server: /top
 	$.ajax({
@@ -356,7 +362,7 @@ function submitPost(){
 
 	//send data as POST to server
 	$.ajax({
-		url: "/addPost",
+		url: "/post",
 		type: "POST",
 		data: data,
 		success: function (data) {
@@ -374,6 +380,80 @@ function submitPost(){
 	//clear form fields
 	
 }
+
+function deletePost(){
+	
+	//get data from form
+	var form = $('#delpost_frm');
+	
+	var data = {}
+	data.id = parseInt(form.find("input[name='post_id']").val());
+
+	console.log('deletePost()')
+		
+	//log that (best for debugging)
+	//alert(JSON.stringify(data));
+	console.log(JSON.stringify(data));
+
+	//send data as POST to server
+	$.ajax({
+		url: "/post",
+		type: "DELETE",
+		data: data,
+		success: function (rows) {
+			alert("Post Deleted: \n\n" + JSON.stringify(rows))
+		},
+		error: function (qError) {
+			
+			var e = qError.responseText;
+				alert(qError.status + " "+qError.statusText +"\n\n" + e)
+		}
+
+
+	});
+
+	//clear form fields
+	
+}
+
+function subscribe(){
+	
+	//get users from form
+	var form = $('#subscribe_frm');
+	var data = {};
+	data.user = form.find("input[name='user']").val();
+	data.subs = form.find("input[name='subs']").val();
+	
+	//normalize string encoding
+	for(attr in data){
+		data[attr] = data[attr].normalize()
+		console.log(data[attr])
+	}
+
+	//log that (best for debugging)
+	console.log(data);
+	console.log(JSON.stringify(data));
+
+	$.ajax({
+		url: "/subscribe",
+		type: "POST",
+		data: data,
+		success: function (rows) {
+			alert("User '"+ data.user + "' subscribed to '" + data.subs +"'\n\n" + JSON.stringify(rows))
+		},
+		error: function(data) {
+				var e = data.responseText;
+				alert(data.status + " "+data.statusText +"\n\n" + e)
+			
+			}
+
+
+	});
+
+	//clear form fields
+
+}
+
 
 
 function addFriend(){
