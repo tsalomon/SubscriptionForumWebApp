@@ -21,13 +21,13 @@ function getDefSubs(){
 				}
 				
 				//var tableData = [["title", "description", "creator", "create_time"]]
-				var tableData = [["title", "description"]];
+				var tableData = [["title"]];
 				
 				row = [];
 				for(var i=0; i < data.length; i++){
 					
 					row.push(data[i].title);
-					row.push(data[i].description);
+					//row.push(data[i].description);
 					//row.push(data[i].creator);
 					//row.push(data[i].create_time);
 					
@@ -75,13 +75,13 @@ function getSubSubs(){
 				}
 				
 				//var tableData = [["title", "description", "creator", "create_time"]]
-				var tableData = [["title", "description"]];
+				var tableData = [["title"]];
 				
 				row = [];
 				for(var i=0; i < data.length; i++){
 					
 					row.push(data[i].title);
-					row.push(data[i].description);
+					//row.push(data[i].description);
 					//row.push(data[i].creator);
 					//row.push(data[i].create_time);
 					
