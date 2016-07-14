@@ -1,98 +1,110 @@
 <!DOCTYPE html>
 <html lang="en">
-	<head>
-		<meta charset="UTF-8">
-		<title>CSC 370 Project</title>
+    <head>
+        <meta charset="UTF-8">
+        <title>CSC 370 Project</title>
 
-		<!-- CSS  -->
-		<!-- load bootstrap from CDN and custom CSS -->
-		<link rel="stylesheet" type="text/css" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
-		<link rel="stylesheet" href="/styles/style.css">
-		
-		<!-- JS -->
-		<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
-		<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
-		<script type="text/javascript" src="/scripts/test.js"></script>
-		<script type="text/javascript" src="/scripts/requests.js"></script>
-		
-		<script>
-			$(document).ready(function(){
-				
-				getDefSubs();
-				addDefPosts();
-			
-			});
-		</script>
-		
-	</head>
+        <!-- CSS  -->
+        <!-- load bootstrap from CDN and custom CSS -->
+        <link
+            rel="stylesheet"
+            type="text/css"
+            href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+        <link rel="stylesheet" href="/styles/style.css">
 
-	<body>
-	
-	
-	<!-- HEADER -->
+        <!-- JS -->
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.0/jquery.min.js"></script>
+        <script
+            src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script type="text/javascript" src="/scripts/test.js"></script>
+        <script type="text/javascript" src="/scripts/requests.js"></script>
 
-	<div class="page-header" style="margin-bottom:0px;">
-		<h1>Front Page  <small>Top Posts in Default Subsaiddits</small></h1>
-	</div>
-	<!-- HEADER -->
-	
-	<!-- NAVBAR -->
-	<nav class="navbar navbar-inverse">
-	  <div class="container-fluid">
-		<!-- Brand and toggle get grouped for better mobile display -->
-		<div class="navbar-header">
-		  <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1" aria-expanded="false">
-			<span class="sr-only">Toggle navigation</span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-			<span class="icon-bar"></span>
-		  </button>
-		 
-		  <a class="navbar-brand" href="#"><img src="../images/logo_2.png"></a>
-		</div>
+        <script>
+            $(document)
+                .ready(function () {
 
-		<!-- Collect the nav links, forms, and other content for toggling -->
-		<div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
-		  <ul class="nav navbar-nav">
-		  
-			<li class="active"><a href="/front">Front Page</a></li>
-			<li><a href="/myfront">My Front Page</a></li>
-			<li><a href="/tables">Tables</a></li>
-			
-		  </ul>
-			
-			<form id="login_frm" class="navbar-form navbar-right">
-			<div class="form-group">
-			  <input type="text" class="form-control" placeholder="User" name="user">
-				<input type="password" class="form-control" placeholder="Pass" name="pass">
-			</div>
-			<button class="btn btn-default" type="button" onclick="login()">Login</button>
-		  </form>
-			
-		</div><!-- /.navbar-collapse -->
-	  </div><!-- /.container-fluid -->
-	</nav>
-	<!-- END OF NAVBAR -->
-	
-	
-	<!-- CONTENT -->
-	<div class="container content-view">
-	  <div class="row">
-	  
-		<!-- LEFT SIDEBAR -->
-		<div class="col-sm-0 col-lg-3">
-			 
-		</div>
-		<!-- END OF LEFT SIDEBAR -->
-		
-		
-		<!-- CENTRE AREA -->
-		<div id="posts" class="col-sm-8 col-lg-6">
-		
-		
-		
-		
-		<!-- EXAMPLE PANEL 1 
+                    getDefSubs();
+                    addDefPosts();
+
+                });
+        </script>
+
+    </head>
+
+    <body>
+
+        <!-- HEADER -->
+
+        <div class="page-header" style="margin-bottom:0px;">
+            <h1>Front Page
+                <small>Top Posts in Default Subsaiddits</small>
+            </h1>
+        </div>
+        <!-- HEADER -->
+
+        <!-- NAVBAR -->
+        <nav class="navbar navbar-inverse">
+            <div class="container-fluid">
+                <!-- Brand and toggle get grouped for better mobile display -->
+                <div class="navbar-header">
+                    <button
+                        type="button"
+                        class="navbar-toggle collapsed"
+                        data-toggle="collapse"
+                        data-target="#bs-example-navbar-collapse-1"
+                        aria-expanded="false">
+                        <span class="sr-only">Toggle navigation</span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                        <span class="icon-bar"></span>
+                    </button>
+
+                    <a class="navbar-brand" href="#"><img src="../images/logo_2.png"></a>
+                </div>
+
+                <!-- Collect the nav links, forms, and other content for toggling -->
+                <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+                    <ul class="nav navbar-nav">
+
+                        <li class="active">
+                            <a href="/front">Front Page</a>
+                        </li>
+                        <li>
+                            <a href="/myfront">My Front Page</a>
+                        </li>
+                        <li>
+                            <a href="/tables">Tables</a>
+                        </li>
+
+                    </ul>
+
+                    <form id="login_frm" class="navbar-form navbar-right">
+                        <div class="form-group">
+                            <input type="text" class="form-control" placeholder="User" name="user">
+                            <input type="password" class="form-control" placeholder="Pass" name="pass">
+                        </div>
+                        <button class="btn btn-default" type="button" onclick="login()">Login</button>
+                    </form>
+
+                </div>
+                <!-- /.navbar-collapse -->
+            </div>
+            <!-- /.container-fluid -->
+        </nav>
+        <!-- END OF NAVBAR -->
+
+        <!-- CONTENT -->
+        <div class="container content-view">
+            <div class="row">
+
+                <!-- LEFT SIDEBAR -->
+                <div class="col-sm-0 col-lg-3"></div>
+                <!-- END OF LEFT SIDEBAR -->
+
+                <!-- CENTRE AREA -->
+                <div id="posts" class="col-sm-8 col-lg-6">
+
+                    <!-- EXAMPLE PANEL 1 
 		<div id="examplePost" class="panel panel-default" style="display:none">
 		  <div class="panel-heading">
 				<h2 class="panel-title"><span class="badge pull-right" style="margin-right: 10px">4505</span>
@@ -120,45 +132,45 @@
 		
 		
 		END OF EXAMPLE PANEL 1 -->
-		</div>
-		 
-		
+                </div>
 
-		
-		<!-- END OF CENTRE AREA -->
-		
-		<!-- RIGHT SIDEBAR -->
-		<div class="col-sm-4 col-lg-3">
-			<div class="row">
-			  <div class="col-lg-6">
-				<div class="input-group">
-				  <input type="text" class="form-control" placeholder="Search for...">
-				  <span class="input-group-btn">
-					<button class="btn btn-default" type="button"><span class="glyphicon glyphicon-search"></span></button>
-				  </span>
-				</div><!-- /input-group -->
-			  </div><!-- /.col-lg-6 -->
-			 </div>
-			  <!-- EXAMPLE PANEL 4 -->
-			<div class="row" style="margin-top:15px;">
-			  <div class="col-lg-6">
-				<div class="panel panel-default" id="defaultSubs">
-					<div class="panel-heading">
-						<h3 class="panel-title">Default Subsaiddits <span id="numDefSubs" class="badge">0</span></h3>
-					</div>
-						
-					<!-- Table -->
-					<table class="table">
-					
-					</table>
-				</div>
-			  </div>
-			
-				
-			  
-			</div><!-- /.row -->
-			<!-- END OF EXAMPLE PANEL 4 -->
-			<!--
+                <!-- END OF CENTRE AREA -->
+
+                <!-- RIGHT SIDEBAR -->
+                <div class="col-sm-4 col-lg-3">
+                    <div class="row">
+                        <div class="col-lg-6">
+                            <div class="input-group">
+                                <input type="text" class="form-control" placeholder="Search for...">
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default" type="button">
+                                        <span class="glyphicon glyphicon-search"></span>
+                                    </button>
+                                </span>
+                            </div>
+                            <!-- /input-group -->
+                        </div>
+                        <!-- /.col-lg-6 -->
+                    </div>
+                    <!-- EXAMPLE PANEL 4 -->
+                    <div class="row" style="margin-top:15px;">
+                        <div class="col-lg-6">
+                            <div class="panel panel-default" id="defaultSubs">
+                                <div class="panel-heading">
+                                    <h3 class="panel-title">Default Subsaiddits
+                                        <span id="numDefSubs" class="badge">0</span>
+                                    </h3>
+                                </div>
+
+                                <!-- Table -->
+                                <table class="table"></table>
+                            </div>
+                        </div>
+
+                    </div>
+                    <!-- /.row -->
+                    <!-- END OF EXAMPLE PANEL 4 -->
+                    <!--
 			<form class="" role="search">
 			<div class="form-group">
 			  <input type="text" class="form-control" placeholder="Search">
@@ -166,20 +178,12 @@
 			<button type="submit" class="btn btn-default">Submit</button>
 			</form>
 			-->
-		  
-		 
-		  
-		  
-		  
-		  
-		</div>
-		<!-- END OF RIGHT SIDEBAR -->
-		
-	  </div>
-	</div>
-	
-	
 
-	
-	</body>
+                </div>
+                <!-- END OF RIGHT SIDEBAR -->
+
+            </div>
+        </div>
+
+    </body>
 </html>
