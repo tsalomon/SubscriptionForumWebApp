@@ -110,6 +110,8 @@ function addMyPosts(){
 		url = "/my?user=" + user;
 		
 	}else{
+		
+		//throw Error;
 		user = "tim";
 		url = "/my?user=" + user; //
 	}
@@ -137,9 +139,8 @@ function addMyPosts(){
 				
 				}
 			}, 
-			error: function(rows) {
-					console.log("Could not retrieve your top posts");
-			}
+			error: errorAlert
+			
 	});
 }
 
@@ -207,8 +208,8 @@ function query(){
 			data: {"query":query},
 			success: function(rows){
 			
-				//alert("success!!!!!");
-				rows= JSON.parse(rows);
+				
+				rows = JSON.parse(rows);
 				console.log(rows);
 				
 				if(rows.length != 0){
@@ -223,12 +224,15 @@ function query(){
 					
 				}
 			}, 
-			error: function(data) {
-				var e = data.responseText;
-				alert(data.status + " "+data.statusText +"\n\n" + e)
-			
-			}
+			error: errorAlert()
 	});
+}
+
+var errorAlert = function(data){
+	
+	var e = data.responseText;
+				alert(data.status + " "+data.statusText +"\n\n" + e)
+	
 }
 			
 function makeTable(container, data) {
