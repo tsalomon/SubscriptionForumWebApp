@@ -181,13 +181,22 @@ function query() {
             rows = JSON.parse(rows);
             console.log(rows);
 
-            if (rows.length != 0) {
-                header = Object.keys(rows[0]);
-                console.log(header);
-                tableData.push(header);
-                $.each(rows, function(key, row) {
-                    tableData.push(row);
-                });
+            if (rows !== null) {
+				
+				if(Array.isArray(rows)){
+					header = Object.keys(rows[0]);
+					tableData.push(header);
+					$.each(rows, function(key, row) {
+							tableData.push(row);
+					});
+
+				}else{
+					header = Object.keys(rows);
+					tableData.push(header);
+					var data = $.map(rows, function(val, key) { return val; });
+					console.log(data)
+					tableData.push(data);
+				}
                 makeTable($("#query_results"), tableData);
                 scrollBottom();
             }
@@ -391,6 +400,64 @@ function favourite() {
         },
         error: errorAlert
     });
+}
+
+function cvote() {
+
+    var form = $('#commentvote_frm');
+    var data = {};
+    data.user = form.find("input[name='user']").val();
+    data.c_id = form.find("input[name='comment_id']").val();
+	
+	data.upvote = "";
+	
+    if (form.find("#comment_upvote").hasClass("active")) {
+        data.upvote = 1;
+    }else{
+		data.upvote = 0;
+	}
+	
+    console.log(JSON.stringify(data));
+	
+	$.ajax({
+        url: "/cvote",
+        type: "POST",
+        data: data,
+        success: function(rows) {
+            alert("User '" + data.user + "' voted on comment: '" + data.c_id + "'\n\n" + JSON.stringify(rows))
+        },
+        error: errorAlert
+    });
+    
+}
+
+function pvote() {
+
+    var form = $('#postvote_frm');
+    var data = {};
+    data.user = form.find("input[name='user']").val();
+    data.p_id = form.find("input[name='post_id']").val();
+	
+	data.upvote = "";
+	
+    if (form.find("#post_upvote").hasClass("active")) {
+        data.upvote = 1;
+    }else{
+		data.upvote = 0;
+	}
+	
+    console.log(JSON.stringify(data));
+	
+	$.ajax({
+        url: "/pvote",
+        type: "POST",
+        data: data,
+        success: function(rows) {
+            alert("User '" + data.user + "' voted on post: '" + data.p_id + "'\n\n" + JSON.stringify(rows))
+        },
+        error: errorAlert
+    });
+    
 }
 
 function addFriend() {

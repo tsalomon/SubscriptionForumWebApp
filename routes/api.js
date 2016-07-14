@@ -166,6 +166,63 @@ router.route("/fav")
 
 });
 
+
+router.route("/cvote")
+
+.post(function(req, res, err) {
+
+    var data = req.body;
+
+    con.query("INSERT INTO CommentVotes(user, comment_id, upvote) VALUES (?,?,?);", 
+	
+		[data.user, data.c_id, parseInt(data.upvote)],
+
+        function(qError, rows) {
+
+            if (qError) {
+                console.log("Cvote: " + qError);
+                return res.status(500).send(qError.message)
+            };
+
+            if (rows != null) {
+                res.status(200).send(rows);
+            }
+
+        }
+    );
+
+});
+
+router.route("/pvote")
+
+.post(function(req, res, err) {
+
+    var data = req.body;
+
+    con.query("INSERT INTO PostVotes(user, post_id, upvote) VALUES (?,?,?);", 
+	
+		[data.user, data.p_id, parseInt(data.upvote)],
+
+        function(qError, rows) {
+
+            if (qError) {
+                console.log("Pvote: " + qError);
+                return res.status(500).send(qError.message)
+            };
+
+            if (rows != null) {
+                console.log(rows);
+                console.log(rows.length);
+                res.status(200).send(rows);
+            }
+
+        }
+    );
+
+});
+
+
+
 //------ POST Route -------
 router.route("/post")
     .post(function(req, res, err) {
