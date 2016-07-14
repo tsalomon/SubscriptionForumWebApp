@@ -247,7 +247,13 @@ router.route("/addSub")
         //execute query using GLOBAL db connection
         con.query(
             'INSERT INTO  Subsaiddits(title, def, description, creator) \
- 			VALUES (?,?,?,?);', [subData.title, parseInt(subData.def), subData.desc, subData.creator], //vars replace ?'s in the sql statements
+ 			VALUES (?,?,?,?);', 
+			[
+			subData.title, 
+			parseInt(subData.def), 
+			subData.desc, 
+			subData.creator
+			],
 
             //query response
             function(err, resp) {
