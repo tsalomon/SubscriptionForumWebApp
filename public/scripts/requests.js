@@ -183,7 +183,7 @@ function query() {
 
             if (rows !== null) {
 				
-				if(Array.isArray(rows)){
+				if(Array.isArray(rows) && rows.length !== 0){
 					header = Object.keys(rows[0]);
 					tableData.push(header);
 					$.each(rows, function(key, row) {
