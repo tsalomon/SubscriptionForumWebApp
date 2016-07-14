@@ -373,6 +373,26 @@ function subscribe() {
     });
 }
 
+function favourite() {
+
+    var form = $('#fav_frm');
+    var data = {};
+    data.user = form.find("input[name='user']").val();
+    data.post_id = form.find("input[name='post_id']").val();
+	
+    console.log(JSON.stringify(data));
+
+    $.ajax({
+        url: "/fav",
+        type: "POST",
+        data: data,
+        success: function(rows) {
+            alert("User '" + data.user + "' favourited post: '" + data.post_id + "'\n\n" + JSON.stringify(rows))
+        },
+        error: errorAlert
+    });
+}
+
 function addFriend() {
 
     //get users from form
@@ -443,6 +463,14 @@ function addPost(tuple) {
     var id = tuple.id;
     var ptime = tuple.pub_time;
     var etime = tuple.edit_time;
+	etime = new Date(etime);
+	var options = {
+		year: "numeric", month: "numeric",
+		day: "numeric", hour: "2-digit", minute: "2-digit"
+	};
+	etime = etime.toLocaleDateString("en-us", options)
+	
+	
     var title = tuple.title;
     var text = tuple.text;
     var url = tuple.url;
@@ -453,38 +481,32 @@ function addPost(tuple) {
     var rating = tuple.rating;
 
     var post = '<div id="examplePost" class="panel panel-default"> \
-	\
-					<div class="panel-heading">\
+					<div class="panel-heading" style="">\
 						<h2 class="panel-title">\
-						<span class="badge pull-right" style="margin-right: 10px">' +
-        rating +
-        '</span>\
-						<span class="badge pull-right" style="margin-right: 10px">' +
-        subs +
-        '</span>' +
-        title +
-        '</div>\
-	\
-					<div class="panel-body">\
-						<div class="well well-sm" style="margin-bottom:0px">' +
-        text +
-        '</div>\
-						<h5 class="pull-right"> \
-						<span class="label label-default">id: ' +
-        id +
-        '</span>\
-						<span class="label label-default">' +
-        etime +
-        '</span>\
-						<span class="label label-default">' +
-        creator +
-        '</span>\
-						</h5>\
-						<h5 class="pull-left"> \
-						<a for="basic-url" href="http://' + url + '"> http://' +
-        url +
-        '</a>\
-						</h5>\
+						<span class="label label-pill label-primary pull-right" style="margin-right: 0px padding-bottom:3.6px; padding-top:3.6px">' 
+						+ rating +
+						'</span>\
+						<h4 style="margin-top:0px; margin-bottom:0px">\
+						<a style="text-decoration:none" href="http://' + url + '">' + title + '</a>\
+						</h4>\
+					</div>\
+					<div class="panel-body" style="">\
+						'
+						+ text +
+						'\
+					</div>\
+					<div class="panel-footer" style="padding-top:6px; padding-bottom:6px">\
+ 						Submitted at\
+						<strong class="">'
+						+ etime +
+						'</strong> \
+						by <strong class="">' 
+						+ creator +
+						'</strong>\
+						to <strong class="">/' + subs + '</strong>.' + 
+						'<span class="badge pull-right badge-info" style="margin:0px">id: ' +
+						id +
+						'</span>\
 					</div>\
 				</div>'
 

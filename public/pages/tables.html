@@ -280,7 +280,43 @@
                             </div>
                             <!-- END OF EXAMPLE PANEL 3 -->
 
-                        </div>
+                        
+						
+						<!-- FAV -->
+								<div class="panel panel-default">
+									<div class="panel-heading">
+										<h3 class="panel-title">Favourite Post</h3>
+									</div>
+									<div class="panel-body row">
+
+										<form id="fav_frm" class="col-sm-12">
+
+											<div class="input-group">
+												<input
+													type="text"
+													class="form-control"
+													placeholder="Username"
+													aria-describedby="basic-addon1"
+													name="user">
+												<span class="input-group-addon" id="basic-addon1"></span>
+												<input
+													type="text"
+													class="form-control"
+													placeholder="Post ID"
+													aria-describedby="basic-addon1"
+													name="post_id">
+												<span class="input-group-btn">
+													<button type="button" onclick="favourite()" class="btn btn-default">Submit</button>
+												</span>
+
+											</div>
+
+										</form>
+									</div>
+								</div>
+						
+						
+						</div>
                         <!-- END OF LEFT SIDEBAR -->
 
                         <!-- RIGHT AREA -->
@@ -422,37 +458,88 @@
                                     <div class="panel-body">
                                         <div class="row">
                                             <form id="commentvote_frm" class="col-sm-12">
-
-                                                <div class="input-group" data-toggle="buttons">
-                                                    <input
+											
+												<div class=" form-group row">
+													<div class="col-sm-5">
+														<input
                                                         type="number"
                                                         class="form-control"
                                                         placeholder="Comment ID"
                                                         aria-describedby="basic-addon1"
                                                         name="comment_id">
+													</div>
+													
+													
+													<div class="col-sm-7" data-toggle="buttons">
+														<label class="active btn btn-default">
+															<input type="radio" name="upvote"/>
+															<span class="glyphicon glyphicon-chevron-up"></span>
+														</label>
+														<label class="btn btn-default ">
+															<input type="radio" name="downvote"/>
+															<span class="glyphicon glyphicon-chevron-down"></span>
+														</label>
+														<button type="button" onclick="" class="btn btn-default">Submit</button>
+													</div>
+													
+													
+													
+												</div>
 
-                                                    <span class="input-group-btn">
-                                                        <button type="button" onclick="" class="btn btn-default pull-right">Submit</button>
-                                                    </span>
-
-                                                </div>
-
-                                                <div class="btn-group" data-toggle="buttons">
-                                                    <label class="active btn btn-default">
-                                                        <input type="radio" name="upvote"/>
-                                                        Upvote
-                                                    </label>
-                                                    <label class="btn btn-default">
-                                                        <input type="radio" name="downvote"/>
-                                                        Downvote
-                                                    </label>
-                                                </div>
-
+										
                                             </form>
                                         </div>
                                     </div>
                                 </div>
                                 <!-- END OF EXAMPLE PANEL 3 -->
+								
+								                                <!-- EXAMPLE PANEL 3 -->
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h3 class="panel-title">**Submit Post Vote</h3>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div class="row">
+                                            <form id="postvote_frm" class="col-sm-12">
+											
+												<div class=" form-group row">
+													<div class="col-sm-5">
+														<input
+                                                        type="number"
+                                                        class="form-control"
+                                                        placeholder="Post ID"
+                                                        aria-describedby="basic-addon1"
+                                                        name="comment_id">
+													</div>
+													
+													
+													<div class="col-sm-7" data-toggle="buttons">
+														<label class="active btn btn-default">
+															<input type="radio" name="upvote"/>
+															<span class="glyphicon glyphicon-chevron-up"></span>
+														</label>
+														<label class="btn btn-default ">
+															<input type="radio" name="downvote"/>
+															<span class="glyphicon glyphicon-chevron-down"></span>
+														</label>
+														<button type="button" onclick="" class="btn btn-default">Submit</button>
+
+													
+													</div>
+						
+													
+													
+												</div>
+
+										
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- END OF EXAMPLE PANEL 3 -->
+								
+								
+
 
                                 <script>
                                     //add rows of data to example table using JS on page load

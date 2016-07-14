@@ -140,6 +140,31 @@ router.route("/subscribe")
 
 });
 
+router.route("/fav")
+
+.post(function(req, res, err) {
+
+    var data = req.body;
+
+    con.query("INSERT INTO Favourites(user, post_id) VALUES (?,?);", [data.user, data.post_id],
+
+        function(qError, rows) {
+
+            if (qError) {
+                console.log("Favourite: " + qError);
+                return res.status(500).send(qError.message)
+            };
+
+            if (rows != null) {
+                console.log(rows);
+                console.log(rows.length);
+                res.status(200).send(rows);
+            }
+
+        }
+    );
+
+});
 
 //------ POST Route -------
 router.route("/post")
