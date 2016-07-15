@@ -336,6 +336,37 @@ function submitPost() {
     });
 }
 
+function submitComment() {
+
+    var form = $('#comment_frm');
+
+    var data = {}
+    data.creator = form.find("input[name='creator']").val();
+    data.words = form.find("textarea[name='text']").val();
+    data.upvotes = form.find("input[name='upvotes']").val();
+    data.downvotes = form.find("input[name='downvotes']").val();
+	data.p_reply = form.find("input[name='post_id']").val();
+	data.c_reply = form.find("input[name='comment_id']").val();
+	
+    //normalize string encoding
+    for (attr in data) {
+        data[attr] = data[attr].normalize()
+        console.log(data[attr])
+    }
+
+    console.log(JSON.stringify(data));
+
+    $.ajax({
+        url: "/comment",
+        type: "POST",
+        data: data,
+        success: function(data) {
+            alert("Comment Added")
+        },
+        error: errorAlert
+    });
+}
+
 function deletePost() {
 
     var form = $('#delpost_frm');

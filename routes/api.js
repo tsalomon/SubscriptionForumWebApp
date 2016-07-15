@@ -221,6 +221,71 @@ router.route("/pvote")
 
 });
 
+router.route("/comment")
+    .post(function(req, res, err) {
+
+        //extract data from request body
+        var data = req.body;
+        console.log(JSON.stringify(data));
+
+        for (var attr in data) {
+            //console.log(str.normalize())
+            data[attr] = data[attr].normalize()
+            console.log(data[attr])
+        }
+		
+		var qp = ""
+		
+		
+		if(data.p_reply === "" && data.c_reply === ""){
+			qp = 'NULL,NULL'
+			
+		}else{
+			
+			//p_reply
+			if(data.p_reply === ""){
+				qp = 'NULL,' + data.c_reply
+			}
+			//c_reply
+			if(data.c_reply === ""){
+				qp = data.p_reply + ',NULL'
+			}
+		}
+		
+		console.log(JSON.stringify(data))
+		
+		var query = 'INSERT INTO Comments(words, upvotes, downvotes, creator, post_reply, comment_reply)\
+			VALUES (?,?,?,?,' + qp +');'
+			
+			console.log(query);
+
+        //execute query using GLOBAL db connection
+        con.query(
+			query
+            , [
+                data.words,
+                parseInt(data.upvotes),
+                parseInt(data.downvotes),
+                data.creator,
+				data.p_reply,
+				data.c_reply
+            ], //vars replace ?'s in the sql statements
+
+            //query response
+            function(qError, rows) {
+
+                //catch failed queries
+                if (qError) {
+                    console.log(qError);
+                    return res.status(500).send(qError.message)
+                }
+
+                // return success: HTTP 200
+                res.status(200).send(rows);
+            }
+        );
+
+    });
 
 
 //------ POST Route -------
