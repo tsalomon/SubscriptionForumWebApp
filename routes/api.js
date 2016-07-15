@@ -140,6 +140,153 @@ router.route("/subscribe")
 
 });
 
+router.route("/fav")
+
+.post(function(req, res, err) {
+
+    var data = req.body;
+
+    con.query("INSERT INTO Favourites(user, post_id) VALUES (?,?);", [data.user, data.post_id],
+
+        function(qError, rows) {
+
+            if (qError) {
+                console.log("Favourite: " + qError);
+                return res.status(500).send(qError.message)
+            };
+
+            if (rows != null) {
+                console.log(rows);
+                console.log(rows.length);
+                res.status(200).send(rows);
+            }
+
+        }
+    );
+
+});
+
+
+router.route("/cvote")
+
+.post(function(req, res, err) {
+
+    var data = req.body;
+
+    con.query("INSERT INTO CommentVotes(user, comment_id, upvote) VALUES (?,?,?);", 
+	
+		[data.user, data.c_id, parseInt(data.upvote)],
+
+        function(qError, rows) {
+
+            if (qError) {
+                console.log("Cvote: " + qError);
+                return res.status(500).send(qError.message)
+            };
+
+            if (rows != null) {
+                res.status(200).send(rows);
+            }
+
+        }
+    );
+
+});
+
+router.route("/pvote")
+
+.post(function(req, res, err) {
+
+    var data = req.body;
+
+    con.query("INSERT INTO PostVotes(user, post_id, upvote) VALUES (?,?,?);", 
+	
+		[data.user, data.p_id, parseInt(data.upvote)],
+
+        function(qError, rows) {
+
+            if (qError) {
+                console.log("Pvote: " + qError);
+                return res.status(500).send(qError.message)
+            };
+
+            if (rows != null) {
+                console.log(rows);
+                console.log(rows.length);
+                res.status(200).send(rows);
+            }
+
+        }
+    );
+
+});
+
+router.route("/comment")
+    .post(function(req, res, err) {
+
+        //extract data from request body
+        var data = req.body;
+        console.log(JSON.stringify(data));
+
+        for (var attr in data) {
+            //console.log(str.normalize())
+            data[attr] = data[attr].normalize()
+            console.log(data[attr])
+        }
+		
+		var qp = ""
+		
+		
+		if(data.p_reply === "" && data.c_reply === ""){
+			qp = 'NULL,NULL'
+			
+		}else{
+			
+			//p_reply
+			if(data.p_reply === ""){
+				qp = 'NULL,' + data.c_reply
+			}
+			//c_reply
+			if(data.c_reply === ""){
+				qp = data.p_reply + ',NULL'
+			}
+		}
+		
+		console.log(JSON.stringify(data))
+		
+		var query = 'INSERT INTO Comments(words, upvotes, downvotes, creator, post_reply, comment_reply)\
+			VALUES (?,?,?,?,' + qp +');'
+			
+			console.log(query);
+
+        //execute query using GLOBAL db connection
+        con.query(
+			query
+            , [
+                data.words,
+                parseInt(data.upvotes),
+                parseInt(data.downvotes),
+                data.creator,
+				data.p_reply,
+				data.c_reply
+            ], //vars replace ?'s in the sql statements
+
+            //query response
+            function(qError, rows) {
+
+                //catch failed queries
+                if (qError) {
+                    console.log(qError);
+                    return res.status(500).send(qError.message)
+                }
+
+                // return success: HTTP 200
+                res.status(200).send(rows);
+            }
+        );
+
+    });
+
 
 //------ POST Route -------
 router.route("/post")
@@ -247,7 +394,13 @@ router.route("/addSub")
         //execute query using GLOBAL db connection
         con.query(
             'INSERT INTO  Subsaiddits(title, def, description, creator) \
- 			VALUES (?,?,?,?);', [subData.title, parseInt(subData.def), subData.desc, subData.creator], //vars replace ?'s in the sql statements
+ 			VALUES (?,?,?,?);', 
+			[
+			subData.title, 
+			parseInt(subData.def), 
+			subData.desc, 
+			subData.creator
+			],
 
             //query response
             function(err, resp) {
