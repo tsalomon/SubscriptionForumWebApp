@@ -168,9 +168,12 @@ function query() {
 
     var header = "";
     var query = $("#query").val();
-    console.log("query: " + query)
+    
     var tableData = [];
     $("#query_results").empty();
+	console.log("query_before: " + query)
+	query = query.replace(/[\u2018\u2019]/g, "'").replace(/[\u201C\u201D]/g, '"');
+	console.log("query: " + query)
 
     $.ajax({
         url: "/query",
